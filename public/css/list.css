@@ -1,0 +1,264 @@
+/*
+* @Author: hp
+* @Date:   2019-10-22 19:59:14
+* @Last Modified by:   hp
+* @Last Modified time: 2019-10-30 16:22:01
+*/
+*{
+	margin: 0px;
+	padding: 0px;
+}
+html,body{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(225, 238, 246, 1.0);
+	text-align: center;
+	overflow: hidden;
+	background-image: url('../images/d8.gif');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: relative;
+}
+.top{
+	position: fixed;
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 20px;
+	padding: 10px 50px 0px;
+	border-top: 8px solid #2e3f82;
+	overflow: hidden;
+}
+h1{
+	float: left;
+	color: #fff;
+}
+.top>form{
+	float: right;
+	padding: 5px;
+}
+.top>form>input{
+	padding: 5px;
+}
+.back,.alter{
+	border: none;
+	text-align: center;
+	font-weight: bold;
+	color: #fff;
+}
+.back{
+	background-color: skyblue;
+}
+.alter{
+	background-color: #d9534f;
+}
+
+/* body1 */
+.body{
+	width: 100%;
+	height: auto;
+	margin: 70px auto 20px;
+}
+.box{
+	width: 70%;
+	height: 710px;
+	box-sizing: border-box;
+	padding: 20px;
+	margin: auto;
+	box-shadow: 5px 5px 20px 8px gray
+}
+.box h2{
+	color: #fff;
+}
+.box>textarea{
+	width: 100%;
+	height: 200px;
+	line-height: 25px;
+	letter-spacing: 1.5px;
+	font-size: 1.1rem;
+	text-indent: 2em;
+	text-overflow: ellipsis;
+	overflow: auto;
+	white-space: normal;
+}
+.sub{
+	float: right;
+	padding: 2px 8px;
+	margin-bottom: 4px;
+	background-color: #2e529a;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+}
+.memory{
+	width: 100%;
+	height: 340px;
+	box-sizing: border-box;
+	padding-top: 20px;
+	overflow: auto;
+}
+.memory>ul{
+	padding: 20px;
+	padding-top: 0px;
+	/* overflow: auto; */
+}
+.memory>ul>li{
+	list-style: none;
+	box-sizing: border-box;
+	padding: 10px;
+	position: relative;
+	background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 10px;
+	box-sizing: border-box;
+	margin: 0px auto 10px;
+}
+.memory span.oner{
+	float: left;
+	padding-left: 5px;
+}
+.memory span.dot{
+	float: left;
+	padding-left: 5px;
+}
+.memory>ul>li>button{
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+.memory span.date{
+	position: absolute;
+	right: 20px;
+	bottom: 10px;
+}
+.memory p.cont{
+	box-sizing: border-box;
+	padding: 10px;
+	text-align: left;
+	text-indent: 2em;
+	margin-top: 18px;
+}
+
+.page{
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 20px;
+}
+.page>ul{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.page>ul>li{
+	list-style: none;
+	padding: 5px;
+	background-color: #262b39;
+	color: #fff;
+	border: 1px solid #fff;
+	margin: 0px 5px;
+	cursor: pointer;
+}
+.page>ul>li.current{
+	background-color: #fff;
+	font-weight: bold;
+	border: 1px solid #000;
+	color: #000;
+}
+
+/* body2 */
+.body2{
+	width: 75%;
+	height: 78%;
+	margin: 150px auto 20px;
+	border: 1px solid #000;
+	border-radius: 10px;
+	background-color: #fff;
+	position: relative;
+	padding: 20px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+.body2>h2{
+	position: absolute;
+	margin: 0px auto;
+	top: -40px;
+	color: #fff;
+	background: linear-gradient(to right, orange, #00f6ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.upload-container{
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #000;
+}
+.wall{
+	width: 100%;
+	height: 80%;
+	margin: 20px auto;
+	/* display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: space-around;
+	justify-content: space-around; */
+	overflow: auto;
+}
+.wall>ul{
+	width: 100%;
+}
+.wall>ul>li{
+	list-style: none;
+	float: left;
+	position: relative;
+	cursor: pointer;
+}
+.wall>ul>li>span{
+	display: inline-block;
+	position: absolute;
+	padding: 2px 3px;
+	border: 1px solid #000;
+	text-align: center;
+}
+.wall>ul>li>img{
+	width: 185px;
+	height: 185px;
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 5px 10px;
+}
+.wall>ul>li>img:hover{
+	transform: rotate(30deg)
+}
+
+/* 侧边栏 */
+.side{
+	position: fixed;
+	right: 20px;
+	top: 50%;
+	margin-top: -25px;
+	width: 50px;
+	height: 50px;
+}
+.side>ul{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.side li{
+	list-style: none;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	border: 1px solid #fff;
+	margin-top: 5px;
+}
+.side li.current{
+	background-color: #fff;
+}

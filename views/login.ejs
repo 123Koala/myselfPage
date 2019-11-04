@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="../public/css/login.css">
+	</head>
+	<body>
+
+		<div class="wrap">
+			<h2>LOGIN</h2>
+			<form action="http://10.25.160.18:8989/login" method="post">
+				<label>Account&nbsp;&nbsp;:</label>
+				<input type="text" name="user" placeholder="请输入用户名" maxlength="7" required><br><br>
+				<label>Password:</label>
+				<input type="password" name="pass" placeholder="请输入密码" required>
+				<input type="submit" value="登录"><br>
+				<a href="<%= url1 %>" class="forget">忘记密码</a>
+			</form>
+			<% if(user){ %>
+				<strong>没有该用户！</strong>
+			<% } %>
+			<a href="<%= url %>sign">注册</a>
+		</div>
+
+	</body>
+
+</html>

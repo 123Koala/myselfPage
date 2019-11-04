@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="../public/css/list.css">
+	</head>
+	<body>
+		<div class="top">
+			<h1>欢迎&nbsp;<span><%=  user %></span>&nbsp;进入首页</h1>
+			<form action="http://10.25.160.18:8989/back" method="get">
+				<input type="submit" value="退出登录" class="back">
+			</form>
+			<form action="http://10.25.160.18:8989/alterPass" method="get">
+				<input type="submit" value="修改密码" class="alter">
+			</form>
+		</div>
+		<div class="body">
+			<div class="box">
+				<h2>心情语录</h2><br>
+				<textarea placeholder="请在此畅游你思想的海洋..."></textarea>
+				<button class="sub">记录</button>
+				<br><br>
+				<div class="memory">
+					<ul>
+					</ul>
+				</div>
+				<div class="page">
+					<ul></ul>
+				</div>
+			</div>
+		</div>
+		<div class="body2">
+			<h2>Photo Wall</h2>
+			<div class="upload-container">
+			    <input type="file" name="fileToUpload" id="fileToUpload" class="fileupload" />
+			</div>
+			<div class="wall">
+				<ul>
+				</ul>
+			</div>
+		</div>
+		<div class="side">
+			<ul>
+				<li class="current"></li>
+				<li></li>
+			</ul>
+		</div>
+
+		<script type="text/javascript" src="../public/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript">
+			
+			$.ajax({
+				url:'http://10.25.160.18:8989/getInfo',
+				method:'GET',
+				dataType:'json',
+				success:function(data){
+					let n=0;
+					if(data.length%10){
+						n=parseInt(data.length/10)+1
+					}else{
+						n=parseInt(data.length/10)
+					}
+					for(var i=1;i<=n;i++){
+						let tag=$('<li onclick="page(this)"></li>')
+						if(i==1){
+							tag.addClass('current')
+						}
+						tag.html(i)
+						$('.page ul').append(tag)
+					}
+					for(var i in data){
+						if(i>=10) return
+						let tag=$('<li></li>')
+						tag.html(`<button onclick="del(this)">Delete</button>
+							<span class="oner">${data[i].user}</span>
+							<span class="dot">:</span>
+							<p class="cont">${data[i].con}</p>
+							<span class="date">${data[i].date}</span>`)
+						$('.memory>ul').append(tag)
+					}
+				}
+
+			})
+
+			$.ajax({
+				url:'http://10.25.160.18:8989/getPic',
+				method:'GET',
+				dataType:'json',
+				success:function(data){
+					for(let i in data){
+						let lis=$('<li><span>X</span></li>')
+						let tag=$('<img />')
+						tag.attr('src',data[i].url)
+						console.log(tag)
+						lis.append(tag)
+						$('.wall>ul').append(lis)
+					}
+				}
+			})
+
+			function page(a){
+				console.log($(a))
+				console.log($(a).html())
+				$(a).addClass('current').siblings().removeClass('current')
+				$.ajax({
+					url:'http://10.25.160.18:8989/pageList',
+					type:'GET',
+					dataType:'json',
+					data:{
+						page:$(a).html()
+					},
+					success:function(data){
+						console.log(data)
+						$('.memory>ul').html('')
+						data.forEach((item,index)=>{
+							let tag=$('<li></li>');
+							tag.html(`<button onclick="del(this)">Delete</button>
+							<span class="oner">${item.user}</span>
+							<span class="dot">:</span>
+							<p class="cont">${item.con}</p>
+							<span class="date">${item.date}</span>`)
+
+							$('.memory>ul').append(tag)
+						})
+					}
+				})
+			}
+
+			$('.sub').click(function(event){
+				console.log($('textarea').val())
+				$.ajax({
+					url:'http://10.25.160.18:8989/addInfo',
+					method:'POST',
+					data:{
+						con:$('textarea').val()
+					},
+					dataType:'json',
+					success:function(data){
+						console.log(data)
+						$('textarea').val('')
+						$('.memory>ul').children('li').eq(9).remove()
+						let tag=$('<li></li>')
+						tag.html(`<button onclick="del(this)">Delete</button>
+							<span class="oner">${data.user}</span>
+							<span class="dot">:</span>
+							<p class="cont">${data.con}</p>
+							<span class="date">${data.date}</span>`)
+						$('.memory>ul').prepend(tag)
+
+					}
+				})
+			})
+
+			function del(a){
+				var t=confirm('确认删除这条信息吗？')
+				console.log(a)
+				if(t==true){
+					$.ajax({
+						url:'http://10.25.160.18:8989/delThis',
+						method:'POST',
+						dataType:'json',
+						data:{
+							con:$(a).siblings('.cont').html(),
+							date:$(a).siblings('.date').html(),
+							user:$(a).siblings('.oner').html()
+						},
+						success:function(data){
+							if(date.msg==1){
+								$(a).parent().remove()
+							}
+
+							$.ajax({
+								url:'http://10.25.160.18:8989/addOne',
+								type:'GET',
+								dataType:'json',
+								success:function(data){
+									let tag=$('<li></li>')
+									tag.html(`<button onclick="del(this)">Delete</button>
+							<span class="oner">${data[0].user}</span>
+							<span class="dot">:</span>
+							<p class="cont">${data[0].con}</p>
+							<span class="date">${data[0].date}</span>`)
+
+									$('.memory>ul').prepend(tag)
+								}
+							})
+						}
+					})
+				}
+			}
+
+			$('.fileupload').change(function(event){
+				if($('.fileupload').val().length){
+					var fileName=$('.fileupload').val()
+					var extension=fileName.substring(fileName.lastIndexOf('.'),fileName.length).toLowerCase()
+					if(extension==".jpg"||extension==".png"){
+						var data=new FormData()
+						data.append('upload',$('#fileToUpload')[0].files[0])
+						$.ajax({
+							url:'http://10.25.160.18:8989/upload',
+							type:'POST',
+							data:data,
+							cache:false,
+							contentType:false,
+							processData:false,
+							success:function(data){
+								let lis=$('<li><span>X</span></li>')
+								let tag=$('<img />')
+								let url=data.msg
+								console.log(url)
+								tag.attr('src',url)
+								lis.append(tag)
+								$('.wall>ul').append(lis)
+							},
+							error:function(){
+								console.log('error')
+							}
+						})
+					}
+				}
+			})
+
+			$('.wall>ul>li>span').click(function(){
+				alert(2)
+			})
+
+
+			$('textarea').focus(function(event){
+				$(this).removeAttr('placeholder')
+			})
+			$('textarea').blur(function(event){
+				$(this).attr('placeholder', '请在此畅游你思想的海洋...')
+			})
+			$('.side>ul>li').click(function(){
+				$(this).addClass('current').siblings('li').removeClass('current')
+			})
+			$('.side>ul>li').eq(0).click(function(){
+				$('.body').slideDown(1500);
+			})
+			$('.side>ul>li').eq(1).click(function(){
+				$('.body').slideUp(1500);
+			})
+
+		</script>
+	</body>
+</html>

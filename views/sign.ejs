@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<link rel="stylesheet" href="../public/css/sign.css">
+	</head>
+	<body>
+		<div class="wrap">
+			<h2>SIGN</h2>
+			<form action="http://10.25.160.18:8989/sign" method="post">
+				<label>Account&nbsp;&nbsp;:</label>
+				<input type="text" name="user" placeholder="请输入用户名" maxlength="7" required><br><br>
+				<label>Password:</label>
+				<input type="password" name="pass" placeholder="请输入密码" required>
+				<input type="submit" value="注册">
+			</form>
+			<a href="<%= url %>">登录</a>
+		</div>
+
+	</body>
+</html>

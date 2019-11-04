@@ -1,0 +1,13 @@
+/*
+* @Author: hp
+* @Date:   2019-10-22 10:03:38
+* @Last Modified by:   hp
+* @Last Modified time: 2019-10-22 10:04:27
+*/
+h1{
+	color: orange;
+}
+h1>span{
+	color: #000;
+	font-weight: bold;
+}

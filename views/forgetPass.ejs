@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>修改密码</title>
+	<link rel="stylesheet" href="../public/css/forgetPass.css">
+</head>
+<body>
+	<div class="wrap">
+		<div class="top">
+			<h2>修改密码</h2>
+			<form action="http://10.25.160.18:8989/alterPass" method="post" onsubmit="return false">
+				<label>输&nbsp;入&nbsp;账&nbsp;号:</label>
+				<input type="text" name="user" class="user"><br><br>
+				<label>输入旧密码:</label>
+				<input type="password" name="oldpass" class="old"><br><br>
+				<label>输入新密码:</label>
+				<input type="password" name="newpass1" class="new1"><br><br>
+				<label>确认新密码:</label>
+				<input type="password" name="newpass2" class="new2"><br><br>
+				<input type="submit" class="btn">
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="../public/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript">
+		$('.btn').click(function(event){
+			
+			if($('.old').val()==$('.new1').val()||$('.new1').val()!=$('.new2').val()||$('.old').val()==''||$('.new1').val()==''||$('.user').val()==''){
+				alert('新密码和旧密码不能相同且都不能为空！')
+			}else{
+				console.log('aaa')
+				$.ajax({
+					url:'http://10.25.160.18:8989/comfirnPass',
+					method:'POST',
+					dataType:'json',
+					data:{
+						user:$('.user').val(),
+						oldpass:$('.old').val()
+					},
+					success:function(data){
+						if(data.msg=='ok'){
+							$.ajax({
+								url:'http://10.25.160.18:8989/alterPass',
+								method:'POST',
+								dataType:'json',
+								data:{
+									user:$('.user').val(),
+									oldpass:$('.old').val(),
+									newpass:$('.new1').val()
+								},
+								success:function(data){
+									if(data.msg=='ok'){
+										alert('修改密码成功！即将跳转登陆页面！')
+										setTimeout(function(){
+											location.href='http://10.25.160.18:8989/'
+										},1000)
+									}else{
+										alert('网络超时！')
+									}
+								}
+							})
+						}else{
+							alert(data.msg)
+						}
+					}
+				})
+			}
+		})
+	</script>
+</body>
+</html>
